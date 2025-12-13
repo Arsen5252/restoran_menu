@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Меню ресторану</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="/" class="nav-btn">Головна</a>
+
+    <div class="dropdown">
+        <button class="nav-btn">Категорії</button>
+        <div class="dropdown-content">
+            {% for cat in categories %}
+                <a href="/category/{{ cat.id }}">{{ cat.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <form action="/search" method="get" class="search-box">
+        <input name="search" placeholder="Шукати страву...">
+        <button type="submit">Пошук</button>
+    </form>
+</nav>
+
+<div class="container">
+    {% block content %}{% endblock %}
+</div>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<h1>Меню ресторану</h1>
+
+<div class="cards">
+    {% for dish in dishes %}
+        <div class="card">
+            <img src="/static/{{ dish.image }}" class="card-img">
+            <div class="card-body">
+                <h2>{{ dish.title }}</h2>
+                <p>{{ dish.description }}</p>
+                <p><b>Ціна:</b> {{ dish.price }} грн</p>
+                <p>{{ dish.image }}</p>
+                <p><i>Категорія: {{ dish.category }}</i></p>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
