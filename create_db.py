@@ -44,6 +44,52 @@ cursor.execute(
     ("Капучино", 65, "Кава з пінкою", "images/cappuccino.jpg", 3)
 )
 
+cursor.execute(
+    "INSERT INTO menu_items (title, price, description, image, category_id) VALUES (?, ?, ?, ?, ?)",
+    ("Картопля з куркою", 120, "Печена картопля з куркою", "chicken with potatoes.jpg", 1)
+)
+
+cursor.execute(
+    "INSERT INTO menu_items (title, price, description, image, category_id) VALUES (?, ?, ?, ?, ?)",
+    ("Вареники", 120, "Вареники з картоплею", "dumplings.jpg", 1)
+)
+
+cursor.execute(
+    "INSERT INTO menu_items (title, price, description, image, category_id) VALUES (?, ?, ?, ?, ?)",
+    ("Деруни", 70, "Деруни", "Derunis.jpg", 1)
+)
+
+cursor.execute(
+    "INSERT INTO menu_items (title, price, description, image, category_id) VALUES (?, ?, ?, ?, ?)",
+    ("Рис з овочами", 90, "Рис з овочами", "Rice with vegetables.jpg", 1)
+)
+
+cursor.execute(
+    "INSERT INTO menu_items (title, price, description, image, category_id) VALUES (?, ?, ?, ?, ?)",
+    ("Кокакола", 50, "Кокакола 0.5мл", "coca-cola.jpg", 3)
+)
+
+cursor.execute(
+    "INSERT INTO menu_items (title, price, description, image, category_id) VALUES (?, ?, ?, ?, ?)",
+    ("Морозиво", 60, "Морозиво пломбір", "ice-cream.jpg", 2)
+)
+
+cursor.execute(
+    "INSERT INTO menu_items (title, price, description, image, category_id) VALUES (?, ?, ?, ?, ?)",
+    ("Макаруни", 85, "Макаруни", "macaroons.jpg", 2)
+)
+
+cursor.execute(
+    "INSERT INTO menu_items (title, price, description, image, category_id) VALUES (?, ?, ?, ?, ?)",
+    ("Чай", 60, "Чай", "tea.jpg", 3)
+)
+
+cursor.execute(
+    "INSERT INTO menu_items (title, price, description, image, category_id) VALUES (?, ?, ?, ?, ?)",
+    ("Смузі", 55, "Смузі", "smoothies.jpg", 3)
+)
+
+
 conn.commit()
 conn.close()
 

@@ -1,8 +1,9 @@
 from flask import Flask, render_template, request
 import sqlite3
+import os
 
 app = Flask(__name__)
-
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'qwertyuhgfcdxsa')
 
 def get_categories():
     conn = sqlite3.connect("resto.db")

@@ -7,7 +7,7 @@
 <div class="cards">
     {% for dish in dishes %}
         <div class="card">
-            <img src="/static/{{ dish.image }}" class="card-img">
+            <img src="/static/images/{{ dish.image }}" class="card-img" style="max-width: 50%;">
             <div class="card-body">
                 <h2>{{ dish.title }}</h2>
                 <p>{{ dish.description }}</p>

@@ -1,33 +1,51 @@
 <!DOCTYPE html>
-<html lang="uk">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Меню ресторану</title>
-    <link rel="stylesheet" href="/static/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <link rel="slylesheet" href="'{{url_for('static', filename  = 'style.css') }}">
+
 </head>
 <body>
 
-<nav class="navbar">
-    <a href="/" class="nav-btn">Головна</a>
-
-    <div class="dropdown">
-        <button class="nav-btn">Категорії</button>
-        <div class="dropdown-content">
-            {% for cat in categories %}
-                <a href="/category/{{ cat.id }}">{{ cat.name }}</a>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Меню</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Головна</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Категорії
+          </a>
+          <ul class="dropdown-menu">
+           {% for category in categories %}
+               <li><a class="dropdown-item" href="{{url_for('category_page', id = category.id)}}">{{category.name}} </a></li>
             {% endfor %}
-        </div>
-    </div>
+          </ul>
+        </li>
 
-    <form action="/search" method="get" class="search-box">
-        <input name="search" placeholder="Шукати страву...">
-        <button type="submit">Пошук</button>
-    </form>
+      </ul>
+      <form actions="{{url_for('search')}}" class="d-flex" role="search">
+        <input required name="search" class="form-control me-2" type="search" placeholder="Шукати страву..." aria-label="Search"/>
+        <button class="btn btn-outline-dark" type="submit">пошук</button>
+      </form>
+    </div>
+  </div>
 </nav>
 
 <div class="container">
     {% block content %}{% endblock %}
 </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>
