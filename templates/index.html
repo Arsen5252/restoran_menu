@@ -4,10 +4,11 @@
 
 <h1>Меню ресторану</h1>
 
-<div class="cards">
+<div class="cards d-flex flex-wrap">
     {% for dish in dishes %}
-        <div class="card">
-            <img src="/static/images/{{ dish.image }}" class="card-img" style="max-width: 50%;">
+        <div class="card" style="width: 400px; height: 500px;">
+            <div class="img-wrapper" style="width: 400px;  overflow: hidden;">
+            <img src="/static/images/{{ dish.image }}" class="card-img" style="width: 100%;"></div>
             <div class="card-body">
                 <h2>{{ dish.title }}</h2>
                 <p>{{ dish.description }}</p>

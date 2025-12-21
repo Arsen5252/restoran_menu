@@ -37,8 +37,8 @@ def search_menu(query):
         SELECT menu_items.*, categories.name as category
         FROM menu_items 
         JOIN categories ON menu_items.category_id = categories.id
-        WHERE menu_items.title LIKE ?
-    """, ('%' + query + '%',))
+        WHERE LOWER (menu_items.title) LIKE LOWER(?)
+    """, ('%' + query.lower() + '%',))
     data = cur.fetchall()
     conn.close()
     return data
@@ -57,6 +57,18 @@ def get_by_category(id):
     data = cur.fetchall()
     conn.close()
     return data
+
+def search_categories(search):
+    conn = sqlite3.connect('resto.db')
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    cursor.execute('''SELECT * FROM categories
+                   WHERE title LIKE ?
+                   ''', ["%"+search+"%"])
+    data = cursor.fetchall()
+    conn.close()
+    return data
+
 
 
 @app.route("/")
