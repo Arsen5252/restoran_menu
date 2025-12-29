@@ -29,7 +29,23 @@ def get_menu_items():
     return data
 
 
-def search_menu(query):
+def search_menu(search):
+    conn = sqlite3.connect("resto.db")
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT * FROM menu_items
+        WHERE title LIKE ? COLLATE NOCASE
+           OR description LIKE ? COLLATE NOCASE
+    """, (f"%{search}%", f"%{search}%"))
+
+    data = cur.fetchall()
+    conn.close()
+    return data
+
+
+def get_by_category(id):
     conn = sqlite3.connect("resto.db")
     conn.row_factory = sqlite3.Row
     cur = conn.cursor()
@@ -37,11 +53,24 @@ def search_menu(query):
         SELECT menu_items.*, categories.name as category
         FROM menu_items 
         JOIN categories ON menu_items.category_id = categories.id
-        WHERE LOWER (menu_items.title) LIKE LOWER(?)
-    """, ('%' + query.lower() + '%',))
+        WHERE category_id = ?
+    """, (id,))
     data = cur.fetchall()
     conn.close()
     return data
+
+def order():
+    if request.method == "POST":
+        name = request.form["name"]
+        surname = request.form["surname"]
+        address = request.form["address"]
+        payment = request.form["payment"]
+
+        return render_template("order_success.html",
+                               name=name)
+
+    dishes = get_menu_items()
+    return render_template("order.html", dishes=dishes)
 
 
 def get_by_category(id):
@@ -70,7 +99,6 @@ def search_categories(search):
     return data
 
 
-
 @app.route("/")
 def index():
     categories = get_categories()
@@ -81,16 +109,31 @@ def index():
 @app.route("/search")
 def search():
     categories = get_categories()
-    query = request.args.get("search", "")
-    dishes = search_menu(query)
+    search = request.args.get("search", "")
+    dishes = search_menu(search)
     return render_template("index.html", categories=categories, dishes=dishes)
 
 
 @app.route("/category/<int:id>")
-def category_page(cat_id):
+def category_page(id):
     categories = get_categories()
-    dishes = get_by_category(cat_id)
+    dishes = get_by_category(id)
     return render_template("index.html", categories=categories, dishes=dishes)
+
+@app.route("/order", methods=["GET", "POST"])
+def order():
+    if request.method == "POST":
+        name = request.form["name"]
+        surname = request.form["surname"]
+        address = request.form["address"]
+        payment = request.form["payment"]
+
+        return render_template("order_success.html",
+                               name=name)
+
+    dishes = get_menu_items()
+    return render_template("order.html", dishes=dishes)
+
 
 
 if __name__ == "__main__":

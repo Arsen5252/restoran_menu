@@ -4,6 +4,8 @@
 
 <h1>Меню ресторану</h1>
 
+
+
 <div class="cards d-flex flex-wrap">
     {% for dish in dishes %}
         <div class="card" style="width: 400px; height: 500px;">
@@ -17,6 +19,8 @@
                 <p><i>Категорія: {{ dish.category }}</i></p>
             </div>
         </div>
+
+        
     {% endfor %}
 </div>
 
