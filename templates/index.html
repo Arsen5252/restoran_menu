@@ -4,8 +4,13 @@
 
 <h1>Меню ресторану</h1>
 
-
-
+<nav>
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Усі</button>
+    <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Вподобані</button>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
 <div class="cards d-flex flex-wrap">
     {% for dish in dishes %}
         <div class="card" style="width: 400px; height: 500px;">
@@ -33,6 +38,43 @@
         
     {% endfor %}
 </div>
+
+  </div>
+  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+    <div class="cards d-flex flex-wrap">
+    {% for dish in dishes %}
+        {% if dish.id in likes %}
+        
+        
+        <div class="card" style="width: 400px; height: 500px;">
+            <div class="img-wrapper" style="width: 400px;  overflow: hidden;">
+            <img src="/static/images/{{ dish.image }}" class="card-img" style="width: 100%;"></div>
+            <div class="card-body">
+                <h2>{{ dish.title }}</h2>
+                <p>{{ dish.description }}</p>
+                <p><b>Ціна:</b> {{ dish.price }} грн</p>
+                <p>{{ dish.image }}</p>
+                <p><i>Категорія: {{ dish.category }}</i></p>
+                <form method="POST" action="/like/{{ dish.id }}">
+                <button type="submit" class="btn btn-lg like-btn ">
+                    {% if dish.id in likes %}
+                    ❤️
+                    {% else %}
+                    🤍
+                    {% endif %}
+                </button>
+            </form>
+
+            </div>
+        </div>
+
+        {% endif %}
+    {% endfor %}
+</div>
+  </div>
+</div>
+
+
 
 {% endblock %}
 
