@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for
 import sqlite3
 import os
 
@@ -59,18 +59,6 @@ def get_by_category(id):
     conn.close()
     return data
 
-def order():
-    if request.method == "POST":
-        name = request.form["name"]
-        surname = request.form["surname"]
-        address = request.form["address"]
-        payment = request.form["payment"]
-
-        return render_template("order_success.html",
-                               name=name)
-
-    dishes = get_menu_items()
-    return render_template("order.html", dishes=dishes)
 
 
 def get_by_category(id):
@@ -103,7 +91,8 @@ def search_categories(search):
 def index():
     categories = get_categories()
     dishes = get_menu_items()
-    return render_template("index.html", categories=categories, dishes=dishes)
+    likes = session.get('likes', [])
+    return render_template("index.html", categories=categories, dishes=dishes, likes=likes)
 
 
 @app.route("/search")
@@ -120,20 +109,18 @@ def category_page(id):
     dishes = get_by_category(id)
     return render_template("index.html", categories=categories, dishes=dishes)
 
-@app.route("/order", methods=["GET", "POST"])
-def order():
-    if request.method == "POST":
-        name = request.form["name"]
-        surname = request.form["surname"]
-        address = request.form["address"]
-        payment = request.form["payment"]
+@app.route("/like/<int:dish_id>",methods=["POST"])
+def like_dish(dish_id):
+    likes = session.get('likes', [])
 
-        return render_template("order_success.html",
-                               name=name)
+    if dish_id in likes:
+        likes.remove(dish_id)
+    else:
+        likes.append(dish_id)
 
-    dishes = get_menu_items()
-    return render_template("order.html", dishes=dishes)
+    session['likes'] = likes 
 
+    return redirect(request.referrer or url_for('index'))
 
 
 if __name__ == "__main__":

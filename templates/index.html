@@ -17,6 +17,16 @@
                 <p><b>Ціна:</b> {{ dish.price }} грн</p>
                 <p>{{ dish.image }}</p>
                 <p><i>Категорія: {{ dish.category }}</i></p>
+                <form method="POST" action="/like/{{ dish.id }}">
+                <button type="submit" class="btn btn-lg like-btn ">
+                    {% if dish.id in likes %}
+                    ❤️
+                    {% else %}
+                    🤍
+                    {% endif %}
+                </button>
+            </form>
+
             </div>
         </div>
 
